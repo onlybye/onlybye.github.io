@@ -9,9 +9,9 @@
     
     <meta name="author" content="小倩倩">
     
-    <meta name="description" content="CoffeeScript介绍[TOC]
+    <meta name="description" content="引言：CoffeeScript是一门编译到javaScript的小巧语言，它的本质是javascript，而不是javascript的超类，但是看起来更加地优雅和小清新。喜爱和嫌弃coffee的都大有人在，大多数人建议在个人的角度玩coffee，下面就让我们走进coffeeScript的世界吧~
 
-引言：CoffeeScript是一门编译到javaScript的小巧语言，它的本质是javascript，而不是javascript的超类，但是看起来更加地优雅和小清新。喜爱和嫌弃coffee的都大有人在，大多数人建议在个人的角度玩coffee，下面就让我们">
+">
     
     
     
@@ -77,7 +77,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-06-10T13:15:16.000Z" itemprop="datePublished">2015-06-10</time>
-    更新日期:<time datetime="2015-06-10T13:15:40.036Z" itemprop="dateModified">2015-06-10</time>
+    更新日期:<time datetime="2015-06-10T13:19:20.920Z" itemprop="dateModified">2015-06-10</time>
     
   </p>
 </header>
@@ -86,13 +86,15 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CoffeeScript介绍"><span class="toc-number">1.</span> <span class="toc-text">CoffeeScript介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装及用法"><span class="toc-number">1.1.</span> <span class="toc-text">1.安装及用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">1.1.2.</span> <span class="toc-text">用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-基本语法"><span class="toc-number">1.2.</span> <span class="toc-text">2.基本语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#表示注释，也可以用###**###来进行多行注释"><span class="toc-number">2.</span> <span class="toc-text">表示注释，也可以用###**###来进行多行注释</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-优点"><span class="toc-number">2.1.</span> <span class="toc-text">3.优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-总结"><span class="toc-number">2.2.</span> <span class="toc-text">4.总结</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装及用法"><span class="toc-number">1.</span> <span class="toc-text">1.安装及用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">1.2.</span> <span class="toc-text">用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-基本语法"><span class="toc-number">2.</span> <span class="toc-text">2.基本语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#表示注释，也可以用###**###来进行多行注释"><span class="toc-number"></span> <span class="toc-text">表示注释，也可以用###**###来进行多行注释</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-优点"><span class="toc-number">1.</span> <span class="toc-text">3.优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-总结"><span class="toc-number">2.</span> <span class="toc-text">4.总结</span></a></li></ol>
 		</div>
 		
-		<h1 id="CoffeeScript介绍">CoffeeScript介绍</h1><p>[TOC]</p>
-<blockquote>
+		<blockquote>
 <p><strong>引言</strong>：CoffeeScript是一门编译到javaScript的小巧语言，它的本质是javascript，而不是javascript的超类，但是看起来更加地优雅和小清新。喜爱和嫌弃coffee的都大有人在，大多数人建议在个人的角度玩coffee，下面就让我们走进coffeeScript的世界吧~</p>
-<h2 id="1-安装及用法">1.安装及用法</h2><h3 id="安装">安装</h3><p>安装前你需要最新稳定版 Node.js, 和 npm (Node Package Manager). 借助 npm 可以安装 CoffeeScript:<br>sudo npm install -g coffee-script</p>
+</blockquote>
+<h2 id="1-安装及用法">1.安装及用法</h2><h3 id="安装">安装</h3><p>安装前你需要最新稳定版 Node.js, 和 npm (Node Package Manager). 借助 npm 可以安装 CoffeeScript:</p>
+<blockquote>
+<p>sudo npm install -g coffee-script</p>
 </blockquote>
 <p>如果不需要全局安装，则可以去掉-g</p>
 <h3 id="用法">用法</h3><p>安装以后，可以运行coffee命令执行.coffee脚本，从而实现将.coffee大码编译成.js代码。例如下面这段animals.coffee脚本 ：</p>
@@ -188,7 +190,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CoffeeScript介绍"><span class="toc-number">1.</span> <span class="toc-text">CoffeeScript介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装及用法"><span class="toc-number">1.1.</span> <span class="toc-text">1.安装及用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">1.1.2.</span> <span class="toc-text">用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-基本语法"><span class="toc-number">1.2.</span> <span class="toc-text">2.基本语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#表示注释，也可以用###**###来进行多行注释"><span class="toc-number">2.</span> <span class="toc-text">表示注释，也可以用###**###来进行多行注释</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-优点"><span class="toc-number">2.1.</span> <span class="toc-text">3.优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-总结"><span class="toc-number">2.2.</span> <span class="toc-text">4.总结</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装及用法"><span class="toc-number">1.</span> <span class="toc-text">1.安装及用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">1.2.</span> <span class="toc-text">用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-基本语法"><span class="toc-number">2.</span> <span class="toc-text">2.基本语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#表示注释，也可以用###**###来进行多行注释"><span class="toc-number"></span> <span class="toc-text">表示注释，也可以用###**###来进行多行注释</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-优点"><span class="toc-number">1.</span> <span class="toc-text">3.优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-总结"><span class="toc-number">2.</span> <span class="toc-text">4.总结</span></a></li></ol>
   </div>
 
 <div id="asidepart">

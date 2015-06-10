@@ -9,7 +9,7 @@
     
     <meta name="author" content="小倩倩">
     
-    <meta name="description" content="BFC的那些事儿 &amp;emsp;从接触前端的很长一段时间内，笔者对css的认识都停留在一个非常浅的层面，就是这个一眼看去很简单实则水很深的东东，总是在很细微的地方给我造成各种困扰。一些bug，一些解决方案，看上去莫名其妙，其实当了解了css的原理以后也就豁然开朗了。最近正好在看css2的W3C标准，就">
+    <meta name="description" content="&amp;emsp;从接触前端的很长一段时间内，笔者对css的认识都停留在一个非常浅的层面，就是这个一眼看去很简单实则水很深的东东，总是在很细微的地方给我造成各种困扰。一些bug，一些解决方案，看上去莫名其妙，其实当了解了css的原理以后也就豁然开朗了。最近正好在看css2的W3C标准，就谈谈BFC这个神奇">
     
     
     
@@ -75,7 +75,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-06-10T13:07:25.000Z" itemprop="datePublished">2015-06-10</time>
-    更新日期:<time datetime="2015-06-10T13:14:37.354Z" itemprop="dateModified">2015-06-10</time>
+    更新日期:<time datetime="2015-06-10T13:18:46.145Z" itemprop="dateModified">2015-06-10</time>
     
   </p>
 </header>
@@ -84,10 +84,10 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC的那些事儿"><span class="toc-number">1.</span> <span class="toc-text">BFC的那些事儿</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#可替换元素"><span class="toc-number">1.0.1.</span> <span class="toc-text">可替换元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#框（Box）"><span class="toc-number">1.0.2.</span> <span class="toc-text">框（Box）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#包含块"><span class="toc-number">1.0.3.</span> <span class="toc-text">包含块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BFC的规则及应用"><span class="toc-number">1.0.4.</span> <span class="toc-text">BFC的规则及应用</span></a></li></ol></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#可替换元素"><span class="toc-number">1.</span> <span class="toc-text">可替换元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#框（Box）"><span class="toc-number">2.</span> <span class="toc-text">框（Box）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#包含块"><span class="toc-number">3.</span> <span class="toc-text">包含块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BFC的规则及应用"><span class="toc-number">4.</span> <span class="toc-text">BFC的规则及应用</span></a></li></ol>
 		</div>
 		
-		<h2 id="BFC的那些事儿">BFC的那些事儿</h2><p> &emsp;从接触前端的很长一段时间内，笔者对css的认识都停留在一个非常浅的层面，就是这个一眼看去很简单实则水很深的东东，总是在很细微的地方给我造成各种困扰。一些bug，一些解决方案，看上去莫名其妙，其实当了解了css的原理以后也就豁然开朗了。最近正好在看css2的W3C标准，就谈谈BFC这个神奇的东西吧。</p>
+		<p> &emsp;从接触前端的很长一段时间内，笔者对css的认识都停留在一个非常浅的层面，就是这个一眼看去很简单实则水很深的东东，总是在很细微的地方给我造成各种困扰。一些bug，一些解决方案，看上去莫名其妙，其实当了解了css的原理以后也就豁然开朗了。最近正好在看css2的W3C标准，就谈谈BFC这个神奇的东西吧。</p>
 <p> <code>W3C</code>标准中对<code>BFC</code>的定义如下所示：</p>
 <blockquote>
 <p><strong>块格式化上下文 Block formatting contexts</strong><br>&emsp;有这几种框会为其内容创建新的块格式化上下文：浮动框、绝对定位框、非块框的块容器、<code>overflow</code>属性非<code>visible</code>的。<br>&emsp;在块格式化上下文中，框会从包含块的顶部开始，一个接一个地,垂直向下地摆放。两个兄弟框之间的垂直距离由<code>margin</code>属性来决定。在同一个块格式化上下文中，相邻的块级框之间的垂直外边距会出现折叠。<br>&emsp;在块格式化上下文中，每个框的左外边距边要紧贴其包含块的左边。即使在有浮动的情景下也是如此，除非框创建了一个新的块格式化上下文(在这种情况下该框可能会为了避开浮动框而变窄)。</p>
@@ -226,7 +226,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC的那些事儿"><span class="toc-number">1.</span> <span class="toc-text">BFC的那些事儿</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#可替换元素"><span class="toc-number">1.0.1.</span> <span class="toc-text">可替换元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#框（Box）"><span class="toc-number">1.0.2.</span> <span class="toc-text">框（Box）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#包含块"><span class="toc-number">1.0.3.</span> <span class="toc-text">包含块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BFC的规则及应用"><span class="toc-number">1.0.4.</span> <span class="toc-text">BFC的规则及应用</span></a></li></ol></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#可替换元素"><span class="toc-number">1.</span> <span class="toc-text">可替换元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#框（Box）"><span class="toc-number">2.</span> <span class="toc-text">框（Box）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#包含块"><span class="toc-number">3.</span> <span class="toc-text">包含块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BFC的规则及应用"><span class="toc-number">4.</span> <span class="toc-text">BFC的规则及应用</span></a></li></ol>
   </div>
 
 <div id="asidepart">
