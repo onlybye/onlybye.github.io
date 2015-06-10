@@ -77,7 +77,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-06-10T13:15:16.000Z" itemprop="datePublished">2015-06-10</time>
-    更新日期:<time datetime="2015-06-10T13:26:10.158Z" itemprop="dateModified">2015-06-10</time>
+    更新日期:<time datetime="2015-06-10T13:29:23.242Z" itemprop="dateModified">2015-06-10</time>
     
   </p>
 </header>
@@ -86,7 +86,7 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装及用法"><span class="toc-number">1.</span> <span class="toc-text">1.安装及用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">1.2.</span> <span class="toc-text">用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-基本语法"><span class="toc-number">2.</span> <span class="toc-text">2.基本语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#表示注释，也可以用###**###来进行多行注释"><span class="toc-number"></span> <span class="toc-text">表示注释，也可以用###**###来进行多行注释</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-优点"><span class="toc-number">1.</span> <span class="toc-text">3.优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-总结"><span class="toc-number">2.</span> <span class="toc-text">4.总结</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装及用法"><span class="toc-number">1.</span> <span class="toc-text">1.安装及用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">1.2.</span> <span class="toc-text">用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-基本语法"><span class="toc-number">2.</span> <span class="toc-text">2.基本语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-优点"><span class="toc-number">3.</span> <span class="toc-text">3.优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-总结"><span class="toc-number">4.</span> <span class="toc-text">4.总结</span></a></li></ol>
 		</div>
 		
 		<blockquote>
@@ -103,7 +103,7 @@
 <p>相信大家都已经看出来，js源代码长多了，可见利用coffeeScirpt可以减少多少代码量。</p>
 <h2 id="2-基本语法">2.基本语法</h2><ul>
 <li>省略了分号，然后在幕后自动添加，避免了由于js的分号引起的bug。并且省略了花括号，通过制表符来代替，这点跟Python相似。</li>
-<li><h1 id="表示注释，也可以用###**###来进行多行注释">表示注释，也可以用###**###来进行多行注释</h1></li>
+<li>‘#’表示注释，也可以用###**###来进行多行注释</li>
 <li>用-&gt;代替function关键字，如果定义无参函数，连括号都可以省。</li>
 <li><p>CoffeeScript还定义了不少特有的操作符、语法糖来简化常用操作：#{}操作符。JavaScript中字符串拼接的实现是比较丑陋的，实践中通常会使用JS模板避免直接拼接；CoffeeScript的解决办法则是通过插值：把变量传进#{}操作符后，再进行拼接，请看下例（假设someName, someId和someValue均为已知变量）：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var field = "<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">'text'</span> <span class="attribute">name</span>=<span class="value">'#&#123;someName&#125;'</span> <span class="attribute">id</span>=<span class="value">'#&#123;someId&#125;'</span> <span class="attribute">value</span>=<span class="value">'#&#123;someValue&#125;'</span>&gt;</span>";</span><br><span class="line">console.log(field);</span><br></pre></td></tr></table></figure>
@@ -146,8 +146,9 @@
 <li>更少，更紧凑，和更清晰的代码</li>
 <li>通过规避和改变对JavaScript中不良部分的使用，只留下精华，让代码减少出错率，更容易维护</li>
 <li>在很多常用模式的实现上采用了JavaScript中的最佳实践</li>
-<li>CoffeeScript生成的JavaScript代码都可以完全通过JSLint的检测<h2 id="4-总结">4.总结</h2>关于CoffeeScript的介绍就到此为止。CoffeeScript能极大简化JavaScript的书写，对JavaScript中的精华与糟粕做了有用的取舍。但是由于他对js的精简，封装了很多细节，方便应用的同时也让我们对原理的了解没有那么深入，所以不应该在不理解js的情况下直接用coffeeScript，它只是我们一个更加高效书写js的工具。</li>
+<li>CoffeeScript生成的JavaScript代码都可以完全通过JSLint的检测</li>
 </ul>
+<h2 id="4-总结">4.总结</h2><p>关于CoffeeScript的介绍就到此为止。CoffeeScript能极大简化JavaScript的书写，对JavaScript中的精华与糟粕做了有用的取舍。但是由于他对js的精简，封装了很多细节，方便应用的同时也让我们对原理的了解没有那么深入，所以不应该在不理解js的情况下直接用coffeeScript，它只是我们一个更加高效书写js的工具。</p>
 <blockquote>
 <p>Written with <a href="https://stackedit.io/" target="_blank" rel="external">StackEdit</a>.</p>
 </blockquote>
@@ -190,7 +191,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装及用法"><span class="toc-number">1.</span> <span class="toc-text">1.安装及用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">1.2.</span> <span class="toc-text">用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-基本语法"><span class="toc-number">2.</span> <span class="toc-text">2.基本语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#表示注释，也可以用###**###来进行多行注释"><span class="toc-number"></span> <span class="toc-text">表示注释，也可以用###**###来进行多行注释</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-优点"><span class="toc-number">1.</span> <span class="toc-text">3.优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-总结"><span class="toc-number">2.</span> <span class="toc-text">4.总结</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装及用法"><span class="toc-number">1.</span> <span class="toc-text">1.安装及用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">1.2.</span> <span class="toc-text">用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-基本语法"><span class="toc-number">2.</span> <span class="toc-text">2.基本语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-优点"><span class="toc-number">3.</span> <span class="toc-text">3.优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-总结"><span class="toc-number">4.</span> <span class="toc-text">4.总结</span></a></li></ol>
   </div>
 
 <div id="asidepart">
