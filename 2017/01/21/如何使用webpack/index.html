@@ -1,0 +1,397 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>如何使用webpack | 码上有吃货</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="onlybye">
+    
+    <meta name="description" content="近期 Github 上各大主流的（React相关）项目来说，它们仓库上所展示的示例已经是基于 webpack 来开发的，比如 React-Bootstrap 和 Redux。webpack甚至被一些大神视为所接触过的最好的前端解决方案。虽然我们在工作项目中并不一定采用webpack，但是没有理由不去">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="码上有吃货" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="码上有吃货" title="码上有吃货"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="码上有吃货">码上有吃货</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/01/21/如何使用webpack/" title="如何使用webpack" itemprop="url">如何使用webpack</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="onlybye">onlybye</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-01-21T03:12:05.000Z" itemprop="datePublished">2017-01-21</time>
+    更新日期:<time datetime="2017-01-21T03:23:31.087Z" itemprop="dateModified">2017-01-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack是什么"><span class="toc-number">1.</span> <span class="toc-text">webpack是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要用webpack"><span class="toc-number">2.</span> <span class="toc-text">为什么要用webpack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本的使用"><span class="toc-number">3.</span> <span class="toc-text">基本的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">3.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#webpack的运行"><span class="toc-number">3.3.</span> <span class="toc-text">webpack的运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块引入"><span class="toc-number">3.4.</span> <span class="toc-text">模块引入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础知识点"><span class="toc-number">4.</span> <span class="toc-text">基础知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CommonJS_与_AMD_支持"><span class="toc-number">4.1.</span> <span class="toc-text">CommonJS 与 AMD 支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shimming"><span class="toc-number">4.2.</span> <span class="toc-text">shimming</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS_及图片的引用"><span class="toc-number">4.3.</span> <span class="toc-text">CSS 及图片的引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#打成多个包"><span class="toc-number">4.4.</span> <span class="toc-text">打成多个包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#独立打包样式文件"><span class="toc-number">4.5.</span> <span class="toc-text">独立打包样式文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#功能标识（Feature_flags）"><span class="toc-number">4.6.</span> <span class="toc-text">功能标识（Feature flags）</span></a></li></ol></li></ol>
+		</div>
+		
+		<blockquote>
+<p>近期 Github 上各大主流的（React相关）项目来说，它们仓库上所展示的示例已经是基于 webpack 来开发的，比如 React-Bootstrap 和 Redux。webpack甚至被一些大神视为所接触过的最好的前端解决方案。虽然我们在工作项目中并不一定采用webpack，但是没有理由不去掌握它。</p>
+</blockquote>
+<hr>
+<h2 id="webpack是什么">webpack是什么</h2><blockquote>
+<p>Webpack 是德国开发者 Tobias Koppers 开发的模块加载器，被Instagram的工程师所采用。在 Webpack 当中, 所有的资源都被当作是模块, js, css, 图片等等..对应各种不同文件类型的资源, Webpack 有对应的模块 loader<br>比如 CoffeeScript 用的是 coffee-loader，更多具体的loader会在后文进行介绍。</p>
+</blockquote>
+<h2 id="为什么要用webpack">为什么要用webpack</h2><ul>
+<li>webpack 是以 commonJS 的形式来书写脚本的，但对 AMD/CMD 的支持也很全面，方便旧项目进行代码迁移。</li>
+<li>能被模块化的不仅仅是 JS 了，包括图片和css，</li>
+<li>开发便捷，能替代部分 grunt/gulp 的工作，比如打包、压缩混淆、图片转base64等。</li>
+<li>扩展性强，插件机制完善，特别是支持 React 热插拔（见 react-hot-loader ）的功能让人眼前一亮。</li>
+<li>有点像browserify，但可以将应用分割成多个文件。如果一个单页应用用包含多个页面，用户只会下载当前页面的代码。如果他们打开另一个网页，不会重新下载通用代码。</li>
+</ul>
+<h2 id="基本的使用">基本的使用</h2><h3 id="安装">安装</h3><pre><code><span class="number">1.</span>   <span class="built_in">npm</span>全局安装:   
+</code></pre><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> webpack -g</span><br></pre></td></tr></table></figure>
+<pre><code><span class="number">2.</span>  写入项目的<span class="package"><span class="keyword">package</span>.<span class="title">json</span>文件:</span>
+</code></pre><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">npm</span> init</span><br><span class="line">$ <span class="built_in">npm</span> install webpack --save-dev</span><br></pre></td></tr></table></figure>
+<h3 id="配置">配置</h3><p>每个项目下都必须配置有一个 webpack.config.js ，它的作用如同常规的 gulpfile.js/Gruntfile.js ，就是一个配置项，告诉 webpack 它需要做什么。官方示例如下所示：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//commonJs的模块引入方式</span></span><br><span class="line">var webpack = require(<span class="string">'webpack'</span>);</span><br><span class="line">var commonsPlugin = <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(<span class="string">'common.js'</span>);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    <span class="comment">//插件项</span></span><br><span class="line"><span class="label">    plugins:</span> [commonsPlugin],</span><br><span class="line">    <span class="comment">//页面入口文件配置</span></span><br><span class="line"><span class="label">    entry:</span> &#123;</span><br><span class="line">        <span class="string">index :</span> <span class="string">'./src/js/page/index.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//入口文件输出配置</span></span><br><span class="line"><span class="label">    output:</span> &#123;</span><br><span class="line"><span class="label">        path:</span> <span class="string">'dist/js/page'</span>,</span><br><span class="line"><span class="label">        filename:</span> <span class="string">'[name].js'</span></span><br><span class="line">    &#125;,</span><br><span class="line"><span class="label">    module:</span> &#123;</span><br><span class="line">        <span class="comment">//加载器配置</span></span><br><span class="line"><span class="label">        loaders:</span> [</span><br><span class="line">            &#123; <span class="string">test:</span> <span class="regexp">/\.css$/</span>, <span class="string">loader:</span> <span class="string">'style-loader!css-loader'</span> &#125;,</span><br><span class="line">            &#123; <span class="string">test:</span> <span class="regexp">/\.js$/</span>, <span class="string">loader:</span> <span class="string">'jsx-loader?harmony'</span> &#125;,</span><br><span class="line">            &#123; <span class="string">test:</span> <span class="regexp">/\.scss$/</span>, <span class="string">loader:</span> <span class="string">'style!css!sass?sourceMap'</span>&#125;,</span><br><span class="line">            &#123; <span class="string">test:</span> <span class="regexp">/\.(png|jpg)$/</span>, <span class="string">loader:</span> <span class="string">'url-loader?limit=8192'</span>&#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//其它解决方案配置</span></span><br><span class="line"><span class="label">    resolve:</span> &#123;</span><br><span class="line"><span class="label">        root:</span> <span class="string">'E:/github/flux-example/src'</span>, <span class="comment">//绝对路径</span></span><br><span class="line"><span class="label">        extensions:</span> [<span class="string">''</span>, <span class="string">'.js'</span>, <span class="string">'.json'</span>, <span class="string">'.scss'</span>],</span><br><span class="line"><span class="label">        alias:</span> &#123;</span><br><span class="line">            <span class="string">AppStore :</span> <span class="string">'js/stores/AppStores.js'</span>,</span><br><span class="line">            <span class="string">ActionType :</span> <span class="string">'js/actions/ActionType.js'</span>,</span><br><span class="line">            <span class="string">AppAction :</span> <span class="string">'js/actions/AppAction.js'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>首先将webpack模块插件require进来，并且生成一个CommonsChunkPlugin的实例commonsPlugin，用于plugins 插件项的配置，CommonsChunkPlugin用于提取多个入口文件的公共脚本部分，然后生成一个 common.js 来方便多页面之间进行复用。</li>
+<li>entry 是页面入口文件配置，output 是对应输出项配置（即入口文件最终要生成什么名字的文件、存放到哪里）</li>
+<li>module.loaders告知 webpack 每一种文件都需要使用什么加载器来处理，用<code>!</code>将多个加载器链接起来，需要注意的是所有用到的loader必须先通过npm下载下来。</li>
+<li>问号后面的表示参数，比如说<code>?limit=8912k</code>表示小于8kb的直接转为base64</li>
+<li>resolve中定义了其他的一些配置，root定义了查找module的起始路径，extension指定了自动扩展文件后缀名，意味着require模块可以省略后缀名，alias定义模块别名，方便后续引用</li>
+</ul>
+<p>关于 webpack.config.js 更详尽的配置可以参考<a href="http://webpack.github.io/docs/configuration.html" target="_blank" rel="external">这里</a>。</p>
+<h3 id="webpack的运行">webpack的运行</h3><p>切换到webpack.config.js所在的目录，然后运行如下命令：</p>
+<ul>
+<li>webpack 直接进行一次编译，另外建议加上错误提示参数<code>--display-error-details</code>,能查看webpack在编译中的查找文件的过程，方便跟踪错误。</li>
+<li>webpack -p </li>
+<li>webpack —watch for continuous incremental build in development (fast!)</li>
+<li>webpack -d to include source maps<h3 id="模块引入">模块引入</h3>直接在页面引入 webpack 最终生成的页面脚本即可<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"dist/js/page/common.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"dist/js/page/index.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="基础知识点">基础知识点</h2><h3 id="CommonJS_与_AMD_支持">CommonJS 与 AMD 支持</h3><p>Webpack 对 CommonJS 的 AMD 的语法做了兼容, 方便迁移代码<br>不过实际上, 引用模块的规则是依据 CommonJS 来的<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">require</span><span class="params">(<span class="string">'lodash'</span>)</span></span> <span class="comment">// 从模块目录查找</span></span><br><span class="line"><span class="function"><span class="title">require</span><span class="params">(<span class="string">'./file'</span>)</span></span> <span class="comment">// 按相对路径查找</span></span><br></pre></td></tr></table></figure></p>
+<p>对 webpack 来说，我们可以直接在上面书写 commonJS 形式的语法，无须任何 define （毕竟最终模块都打包在一起，webpack 也会最终自动加上自己的加载器）,不过保留define也是可以的。</p>
+<h3 id="shimming">shimming</h3><p>在 AMD/CMD 中，我们需要对不符合规范的模块（比如一些直接返回全局变量的插件）进行 shim 处理，比如某个模块依赖 window.jQuery, 需要从 npm 模块中将 jquery 挂载到全局。expose-loader 可以用于解决这个问题，举个例子, 比如我们用到  foo这个模块,这个模块依赖一个 window.jQuery, 而webpack的 jQuery 是 CommonJS 语法的<br>而 foo 对象又是生成好了绑在全局的, 可是我又需要通过 require(‘foo’) 获取变量，最终的写法就是做 Shim 处理直接提供支持:<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">test:</span> require.resolve(<span class="string">'jquery'</span>), <span class="string">loader:</span> <span class="string">'expose?jQuery'</span>&#125;,</span><br><span class="line">&#123;<span class="string">test:</span> require.resolve(<span class="string">'foo'</span>), <span class="string">loader:</span> <span class="string">'exports?window.foo'</span>&#125;,</span><br></pre></td></tr></table></figure></p>
+<h3 id="CSS_及图片的引用">CSS 及图片的引用</h3><p>具体可以参见<a href="https://github.com/petehunt/webpack-howto#5-stylesheets-and-images" target="_blank" rel="external">英文教程</a></p>
+<p>首先引入你所需要的静态资源<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'./bootstrap.css'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./myapp.less'</span>);</span><br><span class="line"></span><br><span class="line"><span class="reserved">var</span> img = <span class="built_in">document</span>.createElement(<span class="string">'img'</span>);</span><br><span class="line">img.src = <span class="built_in">require</span>(<span class="string">'./glyph.png'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>当require CSS(或者 less 等)，webpack会将css文件打包进 bundle.js 文件中，并且在page页面中插入style标签。当require图片时，webpack会将指向image的url打包进bundle.js,require的返回值就是这个url。</p>
+<h3 id="打成多个包">打成多个包</h3><p>有时考虑类库代码的缓存, 我们会考虑打成多个包, 可以通过下面的配置来实现, 首先 entry 有多个属性, 对应多个 JavaScript 包,<br>然后 commonsPlugin 可以用于分析模块的共用代码, 单独打一个包出来:<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"><span class="keyword">var</span> commonsPlugin = <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(<span class="string">'common.js'</span>);</span><br><span class="line"></span><br><span class="line"><span class="module"><span class="keyword">module</span>.exports = </span>&#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    Profile: <span class="string">'./profile.js'</span>,</span><br><span class="line">    Feed: <span class="string">'./feed.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: <span class="string">'build'</span>,</span><br><span class="line">    filename: <span class="string">'[name].js'</span> <span class="comment">// Template based on keys in entry above</span></span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [commonsPlugin]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="独立打包样式文件">独立打包样式文件</h3><p>有时候可能希望项目的样式能不要被打包到脚本中，而是独立出来作为.css，然后在页面中以<link>标签引入。这时候我们需要 extract-text-webpack-plugin 来帮忙：<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line">    <span class="keyword">var</span> commonsPlugin = <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(<span class="string">'common.js'</span>);</span><br><span class="line">    <span class="keyword">var</span> ExtractTextPlugin = <span class="built_in">require</span>(<span class="string">"extract-text-webpack-plugin"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="module"><span class="keyword">module</span>.exports = </span>&#123;</span><br><span class="line">        plugins: [commonsPlugin, <span class="keyword">new</span> ExtractTextPlugin(<span class="string">"[name].css"</span>)],</span><br><span class="line">        entry: &#123;</span><br><span class="line">        <span class="comment">//...省略其它配置</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="功能标识（Feature_flags）">功能标识（Feature flags）</h3><p>项目中有些代码我们只为在开发环境（例如日志）或者是内部测试环境（例如那些没有发布的新功能）中使用，那就需要引入下面这些魔法全局变量（magic globals）：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (__DEV__) &#123;</span><br><span class="line">  <span class="built_in">console</span>.warn(<span class="string">'Extra logging'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">if</span> (__PRERELEASE__) &#123;</span><br><span class="line">  showSecretFeature();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>同时还要在webpack.config.js中配置这些变量，使得webpack能够识别他们。<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// definePlugin 会把定义的string 变量插入到Js代码中。</span></span><br><span class="line"><span class="keyword">var</span> definePlugin = <span class="keyword">new</span> webpack.DefinePlugin(&#123;</span><br><span class="line">  __DEV__: <span class="built_in">JSON</span>.stringify(<span class="built_in">JSON</span>.parse(process.env.BUILD_DEV || <span class="string">'true'</span>)),</span><br><span class="line">  __PRERELEASE__: <span class="built_in">JSON</span>.stringify(<span class="built_in">JSON</span>.parse(process.env.BUILD_PRERELEASE || <span class="string">'false'</span>))</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="module"><span class="keyword">module</span>.exports = </span>&#123;</span><br><span class="line">  entry: <span class="string">'./main.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [definePlugin]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>配置完成后，就可以使用 BUILD_DEV=1 BUILD_PRERELEASE=1 webpack来打包代码了。值得注意的是，webpack -p 会删除所有无作用代码，也就是说那些包裹在这些全局变量下的代码块都会被删除，这样就能保证这些代码不会因发布上线而泄露。</p>
+<blockquote>
+<p>更多内容可以参见<a href="http://webpack.github.io/docs/using-loaders.html" target="_blank" rel="external">webpack官网</a></p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2017/01/21/如何使用webpack/" data-title="如何使用webpack | 码上有吃货" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/01/21/js设计模式之工厂模式/"  title="js设计模式之工厂模式">
+ <strong>NEXT:</strong><br/> 
+ <span>js设计模式之工厂模式
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack是什么"><span class="toc-number">1.</span> <span class="toc-text">webpack是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要用webpack"><span class="toc-number">2.</span> <span class="toc-text">为什么要用webpack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本的使用"><span class="toc-number">3.</span> <span class="toc-text">基本的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">3.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#webpack的运行"><span class="toc-number">3.3.</span> <span class="toc-text">webpack的运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块引入"><span class="toc-number">3.4.</span> <span class="toc-text">模块引入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础知识点"><span class="toc-number">4.</span> <span class="toc-text">基础知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CommonJS_与_AMD_支持"><span class="toc-number">4.1.</span> <span class="toc-text">CommonJS 与 AMD 支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shimming"><span class="toc-number">4.2.</span> <span class="toc-text">shimming</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS_及图片的引用"><span class="toc-number">4.3.</span> <span class="toc-text">CSS 及图片的引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#打成多个包"><span class="toc-number">4.4.</span> <span class="toc-text">打成多个包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#独立打包样式文件"><span class="toc-number">4.5.</span> <span class="toc-text">独立打包样式文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#功能标识（Feature_flags）"><span class="toc-number">4.6.</span> <span class="toc-text">功能标识（Feature flags）</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/前端/" title="前端">前端<sup>2</sup></a></li>
+		
+			<li><a href="/tags/随笔/" title="随笔">随笔<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">標簽雲</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/css/" style="font-size: 10px;">css</a><a href="/tags/前端/" style="font-size: 20px;">前端</a><a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+      <li><a href="http://qdan.me" target="_blank" title="轻单">轻单</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2017 
+		
+		<a href="http://yoursite.com" target="_blank" title="onlybye">onlybye</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"onlybye"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>

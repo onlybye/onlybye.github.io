@@ -4,13 +4,14 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>说点什么好呢 | 码上有吃货</title>
+    <title>mysql备份策略选择 | 码上有吃货</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="onlybye">
     
-    <meta name="description" content="篇首概括一下自己的属性：装逼与拖延齐飞
-&amp;emsp;大概一年前就想过要搭建一个属于自己的blog，考虑过多种方案，一直在犹豫是完全自己写呢，还是用wordpress，又或者选github page，最终因为日益严重的拖延症而搁置。一年后的今天，在某位大神的提醒下，终于有想起了这个未了的心愿。一不做二">
+    <meta name="description" content="⽬前流⾏⼏种备份⽅式包括逻辑备份、物理备份和双机热备份。 
+逻辑备份
+使⽤mysql⾃带的mysqldump⼯具进⾏备份。备份成sql⽂件形式。 优点 ：最⼤好处是能够与正在运⾏的mysql⾃动协同⼯作， 在运⾏期间可以确保备份是当时的点，它会⾃动将对应操作的表锁定，不允许其他⽤户修 改(只能访问)">
     
     
     
@@ -68,15 +69,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/05/13/算是新家了咯/" title="说点什么好呢" itemprop="url">说点什么好呢</a>
+      <a href="/2017/01/21/mysql备份策略选择/" title="mysql备份策略选择" itemprop="url">mysql备份策略选择</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="onlybye">onlybye</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-05-13T15:09:54.000Z" itemprop="datePublished">2015-05-13</time>
-    更新日期:<time datetime="2016-03-11T05:43:27.429Z" itemprop="dateModified">2016-03-11</time>
+    <time datetime="2017-01-21T03:07:12.000Z" itemprop="datePublished">2017-01-21</time>
+    更新日期:<time datetime="2017-01-21T03:07:33.285Z" itemprop="dateModified">2017-01-21</time>
     
   </p>
 </header>
@@ -85,26 +86,47 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#逻辑备份"><span class="toc-number">1.</span> <span class="toc-text">逻辑备份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#物理备份"><span class="toc-number">2.</span> <span class="toc-text">物理备份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双机热备份"><span class="toc-number">3.</span> <span class="toc-text">双机热备份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主从同步不能代替数据库备份"><span class="toc-number">4.</span> <span class="toc-text">主从同步不能代替数据库备份</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主从备份策略"><span class="toc-number">4.1.</span> <span class="toc-text">主从备份策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#备份过程中遇到的坑（视图）"><span class="toc-number">5.</span> <span class="toc-text">备份过程中遇到的坑（视图）</span></a></li></ol>
 		</div>
 		
-		<p><strong>篇首概括一下自己的属性：装逼与拖延齐飞</strong></p>
-<p>&emsp;大概一年前就想过要搭建一个属于自己的blog，考虑过多种方案，一直在犹豫是完全自己写呢，还是用wordpress，又或者选github page，最终因为日益严重的拖延症而搁置。一年后的今天，在某位大神的提醒下，终于有想起了这个未了的心愿。一不做二不休，撇下手头的工作，最终敲定了<code>github page+hexo</code>的方案。虽然大体上是借他人之力，也似乎有种<del>安家立业</del>的感觉，<strong>这是我自己的小窝啊~~ </strong><del>可耻地被自己感动了</del><br>&emsp;可是我为什么要搭建博客呢，第一反应是略略的有点拉风和装逼。对于各种提升逼格的事情，我向来都是不拒绝想着去做一做的。可是当我硬着头皮搭完了博客，感知到的就只剩下新家诞生的喜悦，再也无关与装逼。我想在这个地方mark住我的生活，我的成长。但愿可以在这个博客的帮助下，慢慢改掉拖延的毛病，希望各位监督啦~</p>
+		<blockquote>
+<p>⽬前流⾏⼏种备份⽅式包括逻辑备份、物理备份和双机热备份。 </p>
+<h2 id="逻辑备份">逻辑备份</h2></blockquote>
+<p>使⽤mysql⾃带的mysqldump⼯具进⾏备份。备份成sql⽂件形式。<br> <strong>优点</strong> ：最⼤好处是能够与正在运⾏的mysql⾃动协同⼯作， 在运⾏期间可以确保备份是当时的点，它会⾃动将对应操作的表锁定，不允许其他⽤户修 改(只能访问)。可能会阻⽌修改操作。sql⽂件通⽤⽅便移植。<br><strong>缺点</strong>：备份的速度⽐较慢。如果是数据量很多的时候。就很耗时间。如果数据库服务器处 在提供给⽤户服务状态，在这段⻓时间操作过程中，意味着要锁定表(⼀般是读锁定，只能 读不能写⼊数据)。那么服务就会影响的。 </p>
+<h2 id="物理备份">物理备份</h2><p>直接拷⻉mysql的数据⽬录。 直接拷⻉只适⽤于myisam类型的表。这种类型的表是与机器独⽴的。但实际情况是，你 设计数据库的时候不可能全部使⽤myisam类型表。你也不可能：因为myisam类型表与机 器独⽴，⽅便移植，于是就选择这种表，这并不是选择它的理由。 缺点：你不能去操作正在运⾏的mysql服务器(在拷⻉的过程中有⽤户通过应⽤程序访问更 新数据，这样就⽆法备份当时的数据)可能⽆法移植到其他机器上去。 更多的情况是，你会根据业务特点(⽐如你需要⽀持事务机制就必须使⽤innodb)，查询速 度和服务性能来选择表类型的。 必须保证表不被使⽤中。 如果服务器在你正在拷⻉⼀个表时(某个⽤户在进⾏update、insert操作)改变它，拷⻉的数 据就失去了备份的意义(没法准确还原到当时的点)。 保证你的拷⻉完整性的最好⽅法是：关闭服务器，拷⻉⽂件，然后重启服务器。 或者是，要锁定对应的表(对前端⽤户造成访问问题)。</p>
+<h2 id="双机热备份">双机热备份</h2><p>mysql数据库没有增量备份的机制。当数据量太⼤的时候备份是⼀个很⼤的问题。还好 mysql数据库提供了⼀种主从备份的机制(也就是双机热备) 优点：适合数据量⼤的时候。搭建多台数据库服务器，进⾏主从复制。 主从复制经常遇到的问题就是，如何保证数据不堵塞，不延迟</p>
+<h2 id="主从同步不能代替数据库备份">主从同步不能代替数据库备份</h2><p>举例说明，如果我们在主数据库上误删了⼀个table，那么从数据库也会执⾏相应的操作， 如果没有备份，这就会导致删掉的数据就⽆法找回。（即使回滚⼆进制⽇志也不⼀定能找 回，因为⼆进制⽇志的保存是有时间限制的，并且回滚⼆进制⽇志⾮常复杂）。 因此数据库的完全备份、增量备份是⾄关重要的。 </p>
+<h3 id="主从备份策略">主从备份策略</h3><ol>
+<li>每天进⾏数据库备份。<br><code>mysqldump --master-data --single-transaction -R --databases [db1] [db2] [db3] | gzip -9 - | pv &gt;all-db-with-master-data-$(date +%Y%m%d).sql.gz</code></li>
+<li>将每天的备份同步到从服务器上，以便随时进⾏从数据库的搭建。 </li>
+<li>数据库的恢复 </li>
+</ol>
+<ul>
+<li>恢复主数据库。<br>将master-data⽣产的从数据库信息注释掉，然后恢复即可。 </li>
+<li>恢复从数据库。<br>使⽤备份的数据⽂件，恢复从数据库，然后启动slave即可。 </li>
+</ul>
+<h2 id="备份过程中遇到的坑（视图）">备份过程中遇到的坑（视图）</h2><p>有些时候我们只需要对表结构进⾏备份。在⼀次数据恢复过程中，发现⼀些视图丢失了， 还有⼀些视图被当成table备份了；经过⼀番查资料和动⼿操作，总结了以下步骤，希望能 帮助⼤家（环境是linux+mysql）： </p>
+<ol>
+<li>在需要备份的数据库服务器上⽤命令 <code>mysqldump -u root -p –skip-opt –skip-comments –complete-insert ‘your db name’ &gt; ‘your file name’</code>这个命令会把你的数据库结构和相关数 据都导出来，如果你只要数据库结构,可以⽤以下命令：<code>mysqldump -u root -p -d –skip-opt –skip-comments –complete-insert ‘your db name’ &gt; ‘your file name’</code>; </li>
+<li>把备份后的⽂件通过scp等安全传送⼯具传送到相关的数据库服务器上，我⼀般使⽤ winscp； </li>
+<li>在服务上⽤<code>mysql -u ‘db user name’ -p</code> 进⼊服务器； </li>
+<li><code>create database ‘your db name’ character set utf8</code>; </li>
+<li>set names utf8;<ol>
+<li>source ‘your file name’; </li>
+<li>系统会提⽰成功； 这个时候⽤select * from ‘your view name’;发现数据显⽰出来了。</li>
+</ol>
+</li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/随笔/">随笔</a>
-  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/05/13/算是新家了咯/" data-title="说点什么好呢 | 码上有吃货" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2017/01/21/mysql备份策略选择/" data-title="mysql备份策略选择 | 码上有吃货" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -114,13 +136,21 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/06/10/BFC的那些事儿/" title="BFC的那些事儿">
+ <a href="/2017/01/21/angularJs在IE下的bug/" title="angularJs在IE下的bug">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  BFC的那些事儿</span>
+  angularJs在IE下的bug</span>
 </a>
 </div>
 
+
+<div class="next">
+<a href="/2017/01/21/canvas中的鼠标响应事件/"  title="canvas中的鼠标响应事件">
+ <strong>NEXT:</strong><br/> 
+ <span>canvas中的鼠标响应事件
+</span>
+</a>
+</div>
 
 </nav>
 
@@ -134,7 +164,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#逻辑备份"><span class="toc-number">1.</span> <span class="toc-text">逻辑备份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#物理备份"><span class="toc-number">2.</span> <span class="toc-text">物理备份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双机热备份"><span class="toc-number">3.</span> <span class="toc-text">双机热备份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主从同步不能代替数据库备份"><span class="toc-number">4.</span> <span class="toc-text">主从同步不能代替数据库备份</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主从备份策略"><span class="toc-number">4.1.</span> <span class="toc-text">主从备份策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#备份过程中遇到的坑（视图）"><span class="toc-number">5.</span> <span class="toc-text">备份过程中遇到的坑（视图）</span></a></li></ol>
   </div>
 
 <div id="asidepart">

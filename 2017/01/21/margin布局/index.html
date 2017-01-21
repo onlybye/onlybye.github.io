@@ -1,0 +1,384 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>margin布局 | 码上有吃货</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="onlybye">
+    
+    <meta name="description" content="上次说了margin的使⽤，提到了margin经常被⽤来做布局，那么它在布局中究竟 有什么⽐较给⼒的地⽅呢，下⾯将对margin布局在布局中的作⽤做⼀个⽐较详细 的探讨。 
+
+每⼀个和web⻚⾯打交道的⼯程师都避免不了需要接触css的布局问题。对于⼀个⻚⾯的布 局，不同的⼈有不同解决⽅式，条条⼤路通">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="码上有吃货" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="码上有吃货" title="码上有吃货"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="码上有吃货">码上有吃货</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/01/21/margin布局/" title="margin布局" itemprop="url">margin布局</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="onlybye">onlybye</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-01-21T01:41:30.000Z" itemprop="datePublished">2017-01-21</time>
+    更新日期:<time datetime="2017-01-21T02:46:54.276Z" itemprop="dateModified">2017-01-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#margin之左右布局"><span class="toc-number">1.</span> <span class="toc-text">margin之左右布局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#margin+absolute实现⽅式"><span class="toc-number">2.</span> <span class="toc-text">margin+absolute实现⽅式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#⾃适应宽度"><span class="toc-number">2.1.</span> <span class="toc-text">⾃适应宽度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列顺序⾃动调整"><span class="toc-number">2.2.</span> <span class="toc-text">列顺序⾃动调整</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主内容优先显⽰"><span class="toc-number">2.3.</span> <span class="toc-text">主内容优先显⽰</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#致命缺陷"><span class="toc-number">2.3.1.</span> <span class="toc-text">致命缺陷</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#float+margin形式"><span class="toc-number">3.</span> <span class="toc-text">float+margin形式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#float+负margin形式"><span class="toc-number">4.</span> <span class="toc-text">float+负margin形式</span></a></li></ol>
+		</div>
+		
+		<blockquote>
+<p>上次说了margin的使⽤，提到了margin经常被⽤来做布局，那么它在布局中究竟 有什么⽐较给⼒的地⽅呢，下⾯将对margin布局在布局中的作⽤做⼀个⽐较详细 的探讨。 </p>
+</blockquote>
+<p>每⼀个和web⻚⾯打交道的⼯程师都避免不了需要接触css的布局问题。对于⼀个⻚⾯的布 局，不同的⼈有不同解决⽅式，条条⼤路通罗⻢，最终我们都可以得到想得到的⻚⾯展⽰ 形式。但是除了最终的效果，我们还需关注代码的灵活性、健壮性等。 CSS2.1之前都没有出现真正意义上的布局属性，直⾄现如今的CSS3，才开始出现了⼀些， 如：flex, grid 等，不过其兼容性不是很好，所以为了达成布局⽬的，已衍⽣出各式各样的 ⽅法，如：float, inline-block, table, absolute 等等。 </p>
+<h2 id="margin之左右布局">margin之左右布局</h2><hr>
+<blockquote>
+<p>左右布局是我们经常需要实现的⼀种布局，例如侧栏和内容的显⽰，如下图所⽰。</p>
+</blockquote>
+<p><img src="https://img3.doubanio.com/view/status/raw/public/8441db00f345342.jpg" alt="左右布局"></p>
+<p>对于这种布局相信⼤家都不陌⽣，应该已经在⼯作中遇到过很多次，也有很种很棒的实现 ⽅法。本⽂中我们来看了⼀下那些⽤到了margin的实现⽅式。</p>
+<h2 id="margin+absolute实现⽅式">margin+absolute实现⽅式</h2><hr>
+<p>我们知道块级元素的特性之⼀是换新⾏，也就是说，如果想让 #main 和 #aside 在同⾏显 ⽰，我们要么改变其显⽰属性为 inline-level（即之前说的inline-block布局⽅式），要么改 变其流⽅式（absolute, float, flex and etc…）。 这⾥我们可以使⽤ absolute，即让 ‘#aside’ 脱离常规流，通过绝对定位到想要的位置。然<br>后利⽤margin让’#main’显⽰在’#aside’的右侧，代码如下所⽰：<br><strong>html</strong><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">header</span> <span class="attribute">id</span>=<span class="value">"hd"</span>&gt;</span>头部<span class="tag">&lt;/<span class="title">header</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"bd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">aside</span> <span class="attribute">id</span>=<span class="value">"aside"</span>&gt;</span>侧边栏固定宽度<span class="tag">&lt;/<span class="title">aside</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"main"</span>&gt;</span>主内容栏⾃适应宽度<span class="tag">&lt;/<span class="title">div</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="title">footer</span> <span class="attribute">id</span>=<span class="value">"ft"</span>&gt;</span>底部<span class="tag">&lt;/<span class="title">footer</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>css</strong></p>
+<p>css<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#aside</span><span class="rules">&#123;    </span><br><span class="line">    <span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;    </span><br><span class="line">    <span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;    </span><br><span class="line">    <span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;    </span><br><span class="line">    <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">200px</span></span></span>; </span><br><span class="line">&#125;</span> </span><br><span class="line"><span class="id">#main</span><span class="rules">&#123;    </span><br><span class="line">    <span class="rule"><span class="attribute">margin-left</span>:<span class="value"><span class="number">210px</span></span></span>; </span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>如上关键代码，我们即可实现上图两栏式布局，该布局有两个特点就是，‘#main’ 可以⾃适 应可⽤空间，并且可以实现任意调整两列的顺序。</p>
+<h3 id="⾃适应宽度">⾃适应宽度</h3><p>‘#main’ 的显⽰属性或者流⽅式没有被改变，仍然具备块级元素的特性，所以它会⾃动适应 剩余宽度，即我们常说的⾃适应宽度。 </p>
+<h3 id="列顺序⾃动调整">列顺序⾃动调整</h3><p>另外在不修改 HTML 的情况下，只需简单的修改 CSS，我们即可让左右两栏的顺序调换， 来看代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#aside</span><span class="rules">&#123;    </span><br><span class="line">    <span class="rule"><span class="attribute">position</span>:<span class="value">absolute</span></span>;    </span><br><span class="line">    <span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;    </span><br><span class="line">    <span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">200px</span></span></span>; </span><br><span class="line">&#125;</span> </span><br><span class="line"><span class="id">#main</span><span class="rules">&#123;    </span><br><span class="line">    <span class="rule"><span class="attribute">margin-right</span>:<span class="value"><span class="number">210px</span></span></span>; </span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="主内容优先显⽰">主内容优先显⽰</h3><p>其实我们还可以做适当的修改，让实现更cool⼀些，起到主内容优先显⽰的效果。很简 单，我们只需要将主要内容的HTML排在次要内容的HTML之前即可，因为它是顺序加载渲 染的。代码如下所⽰：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">header</span> <span class="attribute">id</span>=<span class="value">"hd"</span>&gt;</span>头部<span class="tag">&lt;/<span class="title">header</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"bd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"main"</span>&gt;</span>主内容栏⾃适应宽度<span class="tag">&lt;/<span class="title">div</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="title">aside</span> <span class="attribute">id</span>=<span class="value">"aside"</span>&gt;</span>侧边栏固定宽度<span class="tag">&lt;/<span class="title">aside</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="title">footer</span> <span class="attribute">id</span>=<span class="value">"ft"</span>&gt;</span>底部<span class="tag">&lt;/<span class="title">footer</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="致命缺陷">致命缺陷</h4><p>我们知道 absolute 是定位流，脱离正常排版，也就是说绝对定位元素不影响其上下⽂的排 版⽅式， 当‘#aside’的内容⽐较多，⾼度⽐主内容多的时候，就⽆法撑开⽗元素的⾼度， 造成下图的结果。所以在内容量不可控的情况下，不推荐这种⽅式。<br><img src="https://img1.doubanio.com/view/status/raw/public/769728d7924a42a.jpg" alt="图片"></p>
+<h2 id="float+margin形式">float+margin形式</h2><hr>
+<p>和 absolute + margin ⽅式⼀样，float + margin ⽅式⼀样是经典的利⽤来布局的⽅案，并 且被更⼴泛使⽤。来看css代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#aside</span><span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;    </span><br><span class="line">    <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">200px</span></span></span>; </span><br><span class="line">&#125;</span> </span><br><span class="line"><span class="id">#main</span><span class="rules">&#123;    </span><br><span class="line">    <span class="rule"><span class="attribute">margin-left</span>:<span class="value"><span class="number">210px</span></span></span>; </span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>如上述代码，我们使⽤了 float，即从图⽂环绕形态演变⽽来。当 #aside 定义了 float，那 么紧随其后的元素将会环绕在其周围。不过环绕并不是我们想要的结果，我们想要的是 ‘#main’ 也⾃成封闭矩形，所以利⽤ margin 留出⾜够 #aside 显⽰的空间，中断环绕即可。 当然，此时 #main 也是⾃适应宽度的，同时也具备可任意调整列顺序的特点。不过遗憾的 是，这种⽅式⽆法⽀持主内容优先显⽰。 </p>
+<h2 id="float+负margin形式">float+负margin形式</h2><hr>
+<p>这也是传说中的圣杯布局。来看代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">header</span> <span class="attribute">id</span>=<span class="value">"hd"</span>&gt;</span>头部<span class="tag">&lt;/<span class="title">header</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"bd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"main"</span>&gt;</span>主内容栏⾃适应宽度<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">aside</span> <span class="attribute">id</span>=<span class="value">"aside"</span>&gt;</span>侧边栏固定宽度<span class="tag">&lt;/<span class="title">aside</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="title">footer</span> <span class="attribute">id</span>=<span class="value">"ft"</span>&gt;</span>底部<span class="tag">&lt;/<span class="title">footer</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#bd</span><span class="rules">&#123;    </span><br><span class="line">    <span class="rule"><span class="attribute">padding-left</span>:<span class="value"><span class="number">210px</span></span></span>; </span><br><span class="line">&#125;</span> </span><br><span class="line"><span class="id">#aside</span><span class="rules">&#123;    </span><br><span class="line">    <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;    </span><br><span class="line">    <span class="rule"><span class="attribute">position</span>:<span class="value">relative</span></span>;    </span><br><span class="line">    <span class="rule"><span class="attribute">left</span>:<span class="value">-<span class="number">210px</span></span></span>;    </span><br><span class="line">    <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">200px</span></span></span>;    </span><br><span class="line">    <span class="rule"><span class="attribute">margin-left</span>:<span class="value">-<span class="number">100%</span></span></span>; </span><br><span class="line">&#125;</span> </span><br><span class="line"><span class="id">#main</span><span class="rules">&#123;    </span><br><span class="line">    <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">100%</span></span></span>; </span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>如上就是圣杯布局的核⼼代码，简单解释⼀下： ⾸先我们是在做⼀个左侧固定宽度，右侧⾃适应宽度的布局。这⾥我们选择了使⽤ float 来将 #main 和 #aside 变成浮动流。我们只需要这样 #bd{padding-left:210px;} （10px仍 然是⽤来做间隙的），这时 #main 就可以设置 width:100% 了，由于 #bd 设置了 padding， 所以已在左边预留出了⼀块宽 210px 的区域。此时的问题在于如何将 #aside 挪到这个地 ⽅，你想对了，我们是在聊 负margin 布局，⾃然需要利⽤上。 #aside{margin-left:-100%;}很明显，这样还不⾏，此时 #aside 和 #main 的起始位置将会重合，因为 #aside 的 margin-left 计算值是相对包含块来计算的，⽽ 此时包含块的宽度等于 #main 的宽度.这时我们可以借助相对偏移。向左偏移 210px 是件很简单 的事：#aside{position:relative;left:-210px;}。 ⾄此，你的布局OK了，这就是圣杯的实现⽅式。 </p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2017/01/21/margin布局/" data-title="margin布局 | 码上有吃货" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/01/21/canvas中的鼠标响应事件/" title="canvas中的鼠标响应事件">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  canvas中的鼠标响应事件</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/01/21/hello-world/"  title="Hello World">
+ <strong>NEXT:</strong><br/> 
+ <span>Hello World
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#margin之左右布局"><span class="toc-number">1.</span> <span class="toc-text">margin之左右布局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#margin+absolute实现⽅式"><span class="toc-number">2.</span> <span class="toc-text">margin+absolute实现⽅式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#⾃适应宽度"><span class="toc-number">2.1.</span> <span class="toc-text">⾃适应宽度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列顺序⾃动调整"><span class="toc-number">2.2.</span> <span class="toc-text">列顺序⾃动调整</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主内容优先显⽰"><span class="toc-number">2.3.</span> <span class="toc-text">主内容优先显⽰</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#致命缺陷"><span class="toc-number">2.3.1.</span> <span class="toc-text">致命缺陷</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#float+margin形式"><span class="toc-number">3.</span> <span class="toc-text">float+margin形式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#float+负margin形式"><span class="toc-number">4.</span> <span class="toc-text">float+负margin形式</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/前端/" title="前端">前端<sup>2</sup></a></li>
+		
+			<li><a href="/tags/随笔/" title="随笔">随笔<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">標簽雲</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/css/" style="font-size: 10px;">css</a><a href="/tags/前端/" style="font-size: 20px;">前端</a><a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+      <li><a href="http://qdan.me" target="_blank" title="轻单">轻单</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2017 
+		
+		<a href="http://yoursite.com" target="_blank" title="onlybye">onlybye</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"onlybye"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>
